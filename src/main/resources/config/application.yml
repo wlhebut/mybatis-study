@@ -9,8 +9,3 @@ spring:
     name: v2x
   profiles:
     active: dev
-
-  devtools:
-    restart:
-      exclude:  static/**,public/**
-      enabled:  true
