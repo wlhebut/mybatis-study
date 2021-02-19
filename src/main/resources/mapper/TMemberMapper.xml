@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ta.mapper.TMemberMapper" >
+
+    <resultMap id="BaseResultMap" type="com.ta.pojo.TMember" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="member_no" property="memberNo" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="register_date" property="registerDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, member_no, user_name, register_date
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select 
+        <include refid="Base_Column_List" />
+        from t_member
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from t_member
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.ta.pojo.TMember" >
+        insert into t_member (id, member_no, user_name, 
+            register_date)
+        values (#{id,jdbcType=INTEGER}, #{memberNo,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+            #{registerDate,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.ta.pojo.TMember" >
+        insert into t_member
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="memberNo != null" >
+                member_no,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="registerDate != null" >
+                register_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="memberNo != null" >
+                #{memberNo,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="registerDate != null" >
+                #{registerDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.ta.pojo.TMember" >
+        update t_member
+        <set >
+            <if test="memberNo != null" >
+                member_no = #{memberNo,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="registerDate != null" >
+                register_date = #{registerDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.ta.pojo.TMember" >
+        update t_member
+        set member_no = #{memberNo,jdbcType=VARCHAR},
+            user_name = #{userName,jdbcType=VARCHAR},
+            register_date = #{registerDate,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
